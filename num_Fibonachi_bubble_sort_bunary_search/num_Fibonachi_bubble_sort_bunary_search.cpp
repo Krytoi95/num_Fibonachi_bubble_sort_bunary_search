@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cmath>
 //Numbers Fibonachi
 
 // place in number 
@@ -15,9 +15,10 @@ bool Uniqueness_number_array(const int* point_array,const int size,const int num
 void Fill_Dynamic_Array(int* point_array, const int size);
 void Print_Dynamic_Array(const int* point_array, const int size);
 void Bubble_sort(int* point_array, const int size);
+int Binary_search(const int* point_array, const int size, const int seeking_num);
 int main()
 {
-	srand(time(NULL));
+	/*srand(time(NULL));*/
 	int place{ 0 };
 	int number_user{0};
 	int number{0};
@@ -27,8 +28,21 @@ int main()
 	Print_Dynamic_Array(Point_Array, size);
 	std::cout << "*************************************"<< std::endl;
 	Bubble_sort(Point_Array, size);
-
 	Print_Dynamic_Array(Point_Array, size);
+	std::cout << "*************************************" << std::endl;
+	std::cin >> number;
+	std::cout << "*************************************" << std::endl;
+	//std::cout << ceil(1.5) << std::endl;
+	//std::cout << floor(1.5) << std::endl;
+	number_user = Binary_search(Point_Array, size, number);
+	if (number_user == -1)
+	{
+		std::cout << "Isn't" << std::endl;
+	}
+	else 
+	{
+		std::cout << number_user << std::endl;
+	}
 	std::cout << "\tBye!" << std::endl;
 	delete[] Point_Array;
 	Point_Array = nullptr;
@@ -102,15 +116,18 @@ bool Uniqueness_number_array(const int* point_array, const int size, const int n
 	{
 		if (point_array[i] == number)
 		{
-			uniqueness_num = true;
-			break;
-		}
-		else
-		{
-			uniqueness_num = false;
+			return true;
 		}
 	}
-	return uniqueness_num;
+	return false;
+}
+bool Parity_check(int num) 
+{
+	if(num%2==0) 
+	{
+		return true;
+	}
+    return false;
 }
 void Fill_Dynamic_Array(int *point_array, const int size)
 {
@@ -162,7 +179,67 @@ void Bubble_sort(int *point_array, const int size)
 	}
 	}
 }
-
+int Binary_search(const int* point_array, const int size, const int seeking_num)
+{
+	if (Parity_check(size) == true)
+	{
+		int place{ 0 };
+	    place = size / 2;
+		const int iteration{ size / 2 };
+		for (int i = 0; i < iteration; i++)
+		{
+			// 0 1 2 3 4 5 6 7 8 9
+			if (point_array[place] == seeking_num)
+			{
+				return place;
+			}
+			if (point_array[place - 1] == seeking_num)
+			{
+				return  place -1;
+			}
+			if (point_array[place] < seeking_num)
+			{
+				//right
+				place++;
+				continue;
+			}
+			if (point_array[place] > seeking_num)
+			{
+				//left
+				place--;
+				continue;
+			}
+		}
+	}
+	if (Parity_check(size) == false)
+	{
+		// 0 1 2 3 4 5 6 7 8 9 10 
+		int place{ 0 };
+		place = floor(size/2);
+		const int iteration{place+1};
+		for (int i = 0; i < iteration; i++)
+		{
+			if (point_array[place] == seeking_num)
+			{
+				return place;
+			}
+			if (point_array[place] < seeking_num)
+			{
+				//right
+				place++;
+				continue;
+			}
+			if (point_array[place] > seeking_num)
+			{
+				//left
+				place--;
+				continue;
+			}
+		}
+	}
+	return -1;
+	// Error
+}
 
 
 

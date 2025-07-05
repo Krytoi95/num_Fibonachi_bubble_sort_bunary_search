@@ -11,11 +11,10 @@ int Number_Fibonachi(int& place_U, const int number_stop_func, int number1, int 
 // User Fibonachi
 int User_Number_Fibonachi(int number_user1, int number_user2, int stop_func);
 //int User_Number_Fibonachi(int number_user1, int number_user2, int stop_func = 0);
-void INT_swaping(int &NUMBER1,int &NUMBER2);
-bool Uniqueness_number_array(int* point_array, int size, int number);
-void Fill_Dynamic_Array(int* point_array, int size);
-void Print_Dynamic_Array(int* point_array, int size);
-void Bubble_sort(int* point_array, int size);
+bool Uniqueness_number_array(const int* point_array,const int size,const int number);
+void Fill_Dynamic_Array(int* point_array, const int size);
+void Print_Dynamic_Array(const int* point_array, const int size);
+void Bubble_sort(int* point_array, const int size);
 int main()
 {
 	srand(time(NULL));
@@ -25,6 +24,10 @@ int main()
 	int size{ 10 };
 	int* Point_Array{ new int[size] };
 	Fill_Dynamic_Array(Point_Array, size);
+	Print_Dynamic_Array(Point_Array, size);
+	std::cout << "*************************************"<< std::endl;
+	Bubble_sort(Point_Array, size);
+
 	Print_Dynamic_Array(Point_Array, size);
 	std::cout << "\tBye!" << std::endl;
 	delete[] Point_Array;
@@ -92,14 +95,7 @@ int User_Number_Fibonachi(int number_user1, int number_user2, int stop_func = 0)
 	stop_func--;
 	return User_Number_Fibonachi(number_user1, buffer, stop_func);
 }
-void INT_swaping(int &num1,int &num2)
-{
-	int buffer{ 0 };
-	buffer = num1;
-	num1 = num2;
-	num2 = buffer;
-}
-bool Uniqueness_number_array(int* point_array, int size, int number)
+bool Uniqueness_number_array(const int* point_array, const int size, const int number)
 {
 	bool uniqueness_num{ false };
 	for (int i = 0; i < size; i++)
@@ -116,7 +112,7 @@ bool Uniqueness_number_array(int* point_array, int size, int number)
 	}
 	return uniqueness_num;
 }
-void Fill_Dynamic_Array(int *point_array,int size) 
+void Fill_Dynamic_Array(int *point_array, const int size)
 {
 	int num{ 0 };
 	int i{ 0 };
@@ -130,24 +126,41 @@ void Fill_Dynamic_Array(int *point_array,int size)
 		}
 	} while (i<size);
 }
-void Print_Dynamic_Array(int* point_array, int size)
+void Print_Dynamic_Array(const int* point_array, const int size)
 {
 	for (int i = 0; i < size; i++)
 	{
 		std::cout << point_array[i] << std::endl;
 	}
 }
-void Bubble_sort(int *point_array,int size) 
+void Bubble_sort(int *point_array, const int size)
 {
-	int element1{0}, element2{0};
-	bool sort_end{false};
-	do
+	int buffer{ 0 };
+	for (int j = 0; j < size; j++)
 	{
-		if(point_array[element1]) 
+		for (int i = 0; i < size;)
 		{
-		
-		}
-	} while (sort_end==false);
+			if (i < size - 1) {
+				if (point_array[i] > point_array[i + 1])
+				{
+					buffer = point_array[i];
+					point_array[i] = point_array[i + 1];
+					point_array[i + 1] = buffer;
+					i++;
+					continue;
+				}
+				if (point_array[i] <= point_array[i + 1])
+				{
+					i++;
+					continue;
+				}
+			}
+			else
+			{
+				break;
+			}
+	}
+	}
 }
 
 
